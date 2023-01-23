@@ -1,57 +1,60 @@
-@import "mocha.css";
 * {
-    /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FiraCode;
-    font-size: 14px;
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: FiraCode;
+  font-size: 14px;
 }
 
-
 window#waybar {
-    /* background-color: #000000; */
-    background-color: transparent;
-    color: #ffffff;
-    transition-property: background-color;
-    transition-duration: .5s;
-    /* margin: 5px 5px; */
+  background-color: transparent;
+  transition-property: background-color;
+  transition-duration: 0.5s;
 }
 
 window#waybar.hidden {
-    opacity: 0.2;
+  opacity: 0.2;
 }
 
-window#waybar.termite {
-    background-color: #3F3F3F;
+.modules-right,
+.modules-left,
+.modules-center {
+  margin: 2px;
+  margin-bottom: 0;
 }
 
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
-
-button {
-    /* Use box-shadow instead of border so the text isn't offset */
-    box-shadow: inset 0 -3px transparent;
-    /* Avoid rounded borders under each button name */
-    border: none;
-    border-radius: 0;
-}
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+/********************************
+ * Workspace indocator styles
+ ********************************/
 
 #workspaces button {
-    padding: 0 5px; 
-    border-radius: 5em / 5em;
-    background-color: @surface0;
-    color: @peach;
-    margin: 0 2px;
-    font-weight: bold;
+  padding: 0 10px;
+  border-radius: 5em / 5em;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 2px;
+  font-weight: bold;
+  transition-property: padding;
+  transition-duration: 150ms;
 }
 
 #workspaces button.active {
-    background-color: @surface2;
-    color: @surface1;
+  padding: 0 24px;
+  color: rgba(255, 255, 255, 1);
+}
+#workspaces button.urgent {
+  color: rgba(200, 0, 0, 1);
 }
 
+/********************************
+ * Status indicator styles
+ ********************************/
+.modules-right label {
+  padding: 0 10px;
+  border-radius: 5em / 5em;
+}
+.modules-right {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5em 5em;
+}
 
 #clock,
 #battery,
@@ -62,92 +65,40 @@ button {
 #pulseaudio,
 #keyboard-state,
 #mpd {
-    padding: 0 10px;
-    color: @peach;
-    background-color: @surface0; 
-    font-weight: bold;
-    margin-top: 2px;
+  color: rgb(255, 185, 129);
+  font-weight: bold;
 }
 
-#memory {
-   color: @yellow;
-}
-
-#window,
-#workspaces {
-    background-color: transparent;
-    font-weight:bold;
-    border-radius: 5em / 5em;
-    color: @peach;
-    margin-top: 2px;
-    margin-left: 2px;
-}
-
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
-    margin-right: 0;
-}
-
+#cpu,
 #clock {
-  border-top-right-radius: 5em 5em; 
-  border-bottom-right-radius: 5em 5em;
-  color: @sky;   
-  margin-right: 2px;
-}
-
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
-}
-
-label:focus {
-    background-color: #000000;
-}
-
-
-#network.disconnected {
-    background-color: #f53c3c;
+  color: #89dceb;
 }
 
 #pulseaudio {
-    border-top-left-radius: 5em 5em;
-    border-bottom-left-radius: 5em 5em;
-    color: @pink;
+  color: #d77ae9;
 }
 
 #pulseaudio.muted {
-    background-color: #90b1b1;
-    color: #2a5c45;
+  color: rgb(245, 66, 66);
 }
 
+#battery.critical,
+#network.disconnected,
 #temperature.critical {
-    background-color: #eb4d4b;
+  background-color: rgba(200, 0, 0, 0.8);
+  animation-name: critical-blink;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  animation-iteration-count: 16;
 }
 
 #temperature {
-   color: @green;
+  color: #a6f7ba;
 }
 
-#keyboard-state {
-    padding: 0 0px;
-    min-width: 16px;
-    color: @mauve;
-}
-
-
-#keyboard-state > label {
-    padding: 0 5px;
-}
-
-#keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
+@keyframes critical-blink {
+  to {
+    background-color: rgba(200, 0, 0, 0.4);
+  }
 }
